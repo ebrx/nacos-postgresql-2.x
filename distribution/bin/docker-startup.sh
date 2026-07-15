@@ -1,8 +1,5 @@
 #!/bin/bash
 set -x
-mkdir -p ${BASE_DIR}/logs ${BASE_DIR}/data
-chmod 777 ${BASE_DIR}/logs ${BASE_DIR}/data 2>/dev/null || true
-
 export CUSTOM_SEARCH_NAMES="application"
 export CUSTOM_SEARCH_LOCATIONS=file:${BASE_DIR}/conf/
 export MEMBER_LIST="$MEMBER_LIST"
@@ -47,7 +44,7 @@ else
   if [[ "${NACOS_DEBUG}" == "y" ]]; then
     JAVA_OPT="${JAVA_OPT} -Xdebug -Xrunjdwp:transport=dt_socket,address=9555,server=y,suspend=n"
   fi
-  JAVA_OPT="${JAVA_OPT} -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${BASE_DIR}/logs/java_heapdump.hprof"
+  JAVA_OPT="${JAVA_OPT} -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${LOG_HOME}/java_heapdump.hprof"
   JAVA_OPT="${JAVA_OPT} -XX:-UseLargePages"
   print_servers
 fi

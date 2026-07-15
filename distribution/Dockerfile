@@ -21,7 +21,6 @@ ENV MODE="cluster" \
     TIME_ZONE="Asia/Shanghai"
 
 ARG NACOS_VERSION=2.5.3
-ARG HOT_FIX_FLAG=""
 
 WORKDIR $BASE_DIR
 COPY target/nacos-server-${NACOS_VERSION}.tar.gz nacos-server.tar.gz
@@ -29,17 +28,17 @@ COPY target/nacos-server-${NACOS_VERSION}.tar.gz nacos-server.tar.gz
 RUN set -x \
     && tar -xzvf nacos-server.tar.gz -C /home \
     && rm -rf nacos-server.tar.gz /home/nacos/bin/*.cmd /home/nacos/conf/*.example /home/nacos/conf/nacos-mysql.sql \
-    && mkdir -p logs data \
-    && touch logs/start.out \
-    && ln -sf /dev/stdout logs/start.out \
-    && ln -sf /dev/stderr logs/start.out \
-    && chmod +x bin/docker-startup.sh \
-    && chmod -R 777 /home/nacos \
     && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime \
     && echo $TIME_ZONE > /etc/timezone
 
 ADD bin/docker-startup.sh bin/docker-startup.sh
 ADD conf/application.properties conf/application.properties
+
+RUN mkdir -p logs data \
+    && touch logs/start.out \
+    && ln -sf /dev/stdout logs/start.out \
+    && ln -sf /dev/stderr logs/start.out \
+    && chmod -R 777 /home/nacos
 
 EXPOSE 8848
 ENTRYPOINT ["sh","bin/docker-startup.sh"]
