@@ -99,10 +99,11 @@ public class ExternalHistoryConfigInfoPersistServiceImpl implements HistoryConfi
         try {
             HistoryConfigInfoMapper historyConfigInfoMapper = mapperManager.findMapper(
                     dataSourceService.getDataSourceType(), TableConstant.HIS_CONFIG_INFO);
+            // Remove insert id
             jt.update(historyConfigInfoMapper.insert(
-                            Arrays.asList("id", "data_id", "group_id", "tenant_id", "app_name", "content", "md5", "src_ip",
+                            Arrays.asList("data_id", "group_id", "tenant_id", "app_name", "content", "md5", "src_ip",
                                     "src_user", "gmt_modified", "op_type", "publish_type", "gray_name", "ext_info",
-                                    "encrypted_data_key")), id, configInfo.getDataId(), configInfo.getGroup(), tenantTmp,
+                                    "encrypted_data_key")), configInfo.getDataId(), configInfo.getGroup(), tenantTmp,
                     appNameTmp, configInfo.getContent(), md5Tmp, srcIp, srcUser, time, ops, publishTypeTmp,
                     grayNameTemp, extInfo, encryptedDataKey);
         } catch (DataAccessException e) {
@@ -174,10 +175,10 @@ public class ExternalHistoryConfigInfoPersistServiceImpl implements HistoryConfi
         
         String sqlCountRows = historyConfigInfoMapper.count(Arrays.asList("data_id", "group_id", "tenant_id"));
         MapperResult sqlFetchRows = historyConfigInfoMapper.pageFindConfigHistoryFetchRows(context);
-        
+        MapperResult sqlCountRowsParam = historyConfigInfoMapper.findConfigHistoryFetchRows(context);
         Page<ConfigHistoryInfo> page;
         try {
-            page = helper.fetchPage(sqlCountRows, sqlFetchRows.getSql(), sqlFetchRows.getParamList().toArray(), pageNo,
+            page = helper.fetchPageLimit(sqlCountRows, sqlCountRowsParam.getParamList().toArray(), sqlFetchRows.getSql(), sqlFetchRows.getParamList().toArray(), pageNo,
                     pageSize, HISTORY_LIST_ROW_MAPPER);
         } catch (DataAccessException e) {
             LogUtil.FATAL_LOG.error("[list-config-history] error, dataId:{}, group:{}", new Object[] {dataId, group},

@@ -28,11 +28,21 @@
     <name>nacos-datasource-plugin ${project.version}</name>
     <url>https://nacos.io</url>
     <description>Nacos datasource plugin pom.xml file</description>
+
+    <properties>
+        <postgresql.version>42.7.3</postgresql.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-common</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
     </dependencies>
 
