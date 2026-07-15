@@ -6,6 +6,7 @@ chmod 777 ${BASE_DIR}/logs ${BASE_DIR}/data 2>/dev/null || true
 export CUSTOM_SEARCH_NAMES="application"
 export CUSTOM_SEARCH_LOCATIONS=file:${BASE_DIR}/conf/
 export MEMBER_LIST="$MEMBER_LIST"
+: "${LOG_HOME:=${BASE_DIR}/logs}"
 PLUGINS_DIR="/home/nacos/plugins/peer-finder"
 
 function print_servers() {
@@ -84,6 +85,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.member.list=${MEMBER_LIST}"
 
 JAVA_OPT="${JAVA_OPT} -Dloader.path=${BASE_DIR}/plugins,${BASE_DIR}/plugins/health,${BASE_DIR}/plugins/cmdb,${BASE_DIR}/plugins/selector"
 JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
+JAVA_OPT="${JAVA_OPT} -Dnacos.logs.path=${LOG_HOME}"
 JAVA_OPT="${JAVA_OPT} -jar ${BASE_DIR}/target/nacos-server.jar"
 JAVA_OPT="${JAVA_OPT} ${JAVA_OPT_EXT}"
 JAVA_OPT="${JAVA_OPT} --spring.config.additional-location=${CUSTOM_SEARCH_LOCATIONS}"
