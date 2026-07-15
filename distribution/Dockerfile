@@ -34,7 +34,7 @@ RUN set -x \
     && ln -sf /dev/stdout logs/start.out \
     && ln -sf /dev/stderr logs/start.out \
     && chmod +x bin/docker-startup.sh \
-    && chmod -R 777 logs data \
+    && chmod -R 777 /home/nacos \
     && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime \
     && echo $TIME_ZONE > /etc/timezone
 
