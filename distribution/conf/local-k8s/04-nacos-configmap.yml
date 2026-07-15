@@ -1,0 +1,172 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nacos-cm
+  namespace: nacos
+data:
+  application.properties: |
+    #*************** Spring Boot Configuration ***************
+    ### Server Context Path
+    server.servlet.contextPath=/nacos
+    ### Error Message Display Policy
+    server.error.include-message=ALWAYS
+    ### Web Service Port
+    server.port=8848
+    
+    #*************** Network Configuration ***************
+    ### Bind IP Address
+    nacos.inetutils.ip-address=127.0.0.1
+    
+    #*************** Database Configuration ***************
+    ### Database Platform Type
+    spring.sql.init.platform=postgresql
+    ### Data Source Count
+    db.num=1
+    ### Database Connection URL
+    db.url.0=jdbc:postgresql://172.21.31.16:5432/nacosdb?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    ### Database Credentials
+    db.user.0=nacos
+    db.password.0=nacos
+    ### Database Driver Class
+    db.pool.config.driverClassName=org.postgresql.Driver
+    ### Connection Pool Timeout Settings
+    db.pool.config.connectionTimeout=30000
+    db.pool.config.validationTimeout=10000
+    ### Connection Pool Sizing
+    db.pool.config.maximumPoolSize=20
+    db.pool.config.minimumIdle=2
+    ### Configuration Push Retry Limit
+    nacos.config.push.maxRetryTime=50
+    
+    #*************** Service Discovery Configuration ***************
+    # Instance Warm-up
+    # nacos.naming.data.warmup=true
+    # Instance Expiry Policy
+    # nacos.naming.expireInstance=true
+    # Empty Service Cleanup Interval
+    # nacos.naming.clean.empty-service.interval=60000
+    # Empty Service Expiry Time
+    # nacos.naming.clean.empty-service.expired-time=60000
+    # Metadata Expiry Cleanup Interval
+    # nacos.naming.clean.expired-metadata.interval=5000
+    # Metadata Expiry Time
+    # nacos.naming.clean.expired-metadata.expired-time=60000
+    # Push Task Delay
+    # nacos.naming.push.pushTaskDelay=500
+    # Push Task Timeout
+    # nacos.naming.push.pushTaskTimeout=5000
+    # Push Task Retry Interval
+    # nacos.naming.push.pushTaskRetryDelay=1000
+    # Client Instance Expiry Time
+    # nacos.naming.client.expired.time=180000
+    
+    #*************** CMDB Configuration ***************
+    # CMDB Export Interval
+    # nacos.cmdb.dumpTaskInterval=3600
+    # CMDB Event Processing Interval
+    # nacos.cmdb.eventTaskInterval=10
+    # CMDB Tag Sync Interval
+    # nacos.cmdb.labelTaskInterval=300
+    # Initial CMDB Load
+    # nacos.cmdb.loadDataAtStart=false
+    
+    #*************** Tomcat Configuration ***************
+    ### Enable Tomcat MBean Registration
+    server.tomcat.mbeanregistry.enabled=true
+    
+    #*************** Monitoring Configuration ***************
+    # Prometheus Endpoint Exposure
+    # management.endpoints.web.exposure.include=prometheus,health
+    # Disable Elasticsearch Metrics
+    management.metrics.export.elastic.enabled=false
+    # Disable InfluxDB Metrics
+    management.metrics.export.influx.enabled=false
+    
+    #*************** Access Logging ***************
+    ### Enable Tomcat Access Logs
+    server.tomcat.accesslog.enabled=true
+    ### Enable Log Rotation
+    server.tomcat.accesslog.rotate=true
+    ### Log File Date Format
+    server.tomcat.accesslog.file-date-format=.yyyy-MM-dd-HH
+    ### Log Output Format
+    server.tomcat.accesslog.pattern=%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i
+    ### Access Log Storage Path
+    server.tomcat.basedir=file:.
+    
+    #*************** Security Configuration ***************
+    ### Ignore Static Resource Authentication
+    nacos.security.ignore.urls=/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-ui/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**
+    ### Authentication Type
+    nacos.core.auth.system.type=nacos
+    ### Enable Authentication
+    nacos.core.auth.enabled=true
+    ### Enable Authentication Cache
+    nacos.core.auth.caching.enabled=true
+    ### User Agent Whitelist
+    nacos.core.auth.enable.userAgentAuthWhite=false
+    ### Authentication Keys
+    nacos.core.auth.server.identity.key=client-key
+    nacos.core.auth.server.identity.value=client-secret
+    ### Token Cache Configuration
+    nacos.core.auth.plugin.nacos.token.cache.enable=false
+    ### Token Expiry Settings
+    nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+    ### Token Secret Key
+    nacos.core.auth.plugin.nacos.token.secret.key=cZZZ3HHuPtKh/jGCEvldJ3KgHsjY0+oBzi9b9ksQvvo=
+    
+    #*************** LDAP Configuration ***************
+    # LDAP Server Address
+    # nacos.core.auth.ldap.url=ldap://localhost:389
+    # LDAP Base DN
+    # nacos.core.auth.ldap.basedc=dc=example,dc=org
+    # Admin DN
+    # nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
+    # Admin Password
+    # nacos.core.auth.ldap.password=admin
+    # User Filter Template
+    # nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
+    # Filter Prefix
+    # nacos.core.auth.ldap.filter.prefix=uid
+    # Case Sensitivity
+    # nacos.core.auth.ldap.case.sensitive=true
+    # Partial Result Handling
+    # nacos.core.auth.ldap.ignore.partial.result.exception=false
+    
+    #*************** Extended Configuration ***************
+    # Controller Manager Type
+    # nacos.plugin.control.manager.type=nacos
+    # Rule Storage Path
+    # nacos.plugin.control.rule.local.basedir=${nacos.home}
+    # Webhook Configuration
+    # nacos.core.config.plugin.webhook.enabled=false
+    # Webhook Endpoint
+    # nacos.core.config.plugin.webhook.url=http://localhost:8080/webhook/send?token=***
+    # File Format Validation
+    # nacos.core.config.plugin.fileformatcheck.enabled=false
+    
+    #*************** Network Protocol Configuration ***************
+    # GRPC Message Size Limit
+    # nacos.remote.server.grpc.sdk.max-inbound-message-size=10485760
+    # GRPC Keep-Alive Parameters
+    # nacos.remote.server.grpc.sdk.keep-alive-time=7200000
+    
+    #*************** Cluster Configuration ***************
+    # Service Discovery Node List
+    # nacos.member.list=192.168.16.101:8847?raft_port=8807,192.168.16.101?raft_port=8808,192.168.16.101:8849?raft_port=8809
+    # Address Server Retry Count
+    # nacos.core.address-server.retry=5
+    # Address Server Domain
+    # address.server.domain=jmenv.tbsite.net
+    # Address Server Port
+    # address.server.port=8080
+    
+    #*************** Snowflake Configuration ***************
+    # Worker Node ID
+    # nacos.core.snowflake.worker-id=
+    # Metadata Center Address
+    # nacos.core.member.meta.site=
+    
+    #*************** Console Configuration ***************
+    # Enable Web Console
+    nacos.console.ui.enabled=true
